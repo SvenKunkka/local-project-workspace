@@ -46,6 +46,7 @@ with db() as c:
     for column in ('old_status','new_status','project_id'):
         if column not in event_columns: c.execute('ALTER TABLE events ADD COLUMN '+column+' '+('INTEGER' if column=='project_id' else 'TEXT'))
     c.execute('CREATE TABLE IF NOT EXISTS reminder_deliveries(reminder_id INTEGER NOT NULL, member_id INTEGER NOT NULL, last_fired TEXT NOT NULL, PRIMARY KEY(reminder_id,member_id))')
+c.close()
 
 def token_hash(token): return hashlib.sha256(token.encode()).hexdigest()
 def lan_address():
@@ -281,6 +282,7 @@ class Handler(SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     os.chdir(ROOT)
     server=ThreadingHTTPServer(('127.0.0.1',PORT),Handler)
+    if hasattr(sys.stdout, 'reconfigure'): sys.stdout.reconfigure(errors='backslashreplace')
     print(f'项目工作台：http://127.0.0.1:{PORT}\n数据文件：'+str(DB),flush=True)
     if os.environ.get('NO_BROWSER') != '1': threading.Timer(0.7,lambda:webbrowser.open(f'http://127.0.0.1:{PORT}')).start()
     try: server.serve_forever()

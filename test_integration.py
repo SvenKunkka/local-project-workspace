@@ -18,6 +18,8 @@ class Integration(unittest.TestCase):
         cls.temp=tempfile.TemporaryDirectory();env=dict(os.environ,PROJECT_MANAGER_DATA=cls.temp.name,PROJECT_MANAGER_PORT=str(LOCAL),PROJECT_MANAGER_LAN_PORT=str(LAN),NO_BROWSER='1')
         cls.proc=subprocess.Popen([os.environ.get('TEST_SERVER',sys.executable),*([os.path.join(os.path.dirname(__file__),'server.py')] if not os.environ.get('TEST_SERVER') else [])],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
         for _ in range(200):
+            if cls.proc.poll() is not None:
+                raise RuntimeError('server exited: '+cls.proc.stderr.read().decode(errors='replace'))
             try:
                 if request(LOCAL,'state')[0]==200: break
             except OSError: time.sleep(.1)

@@ -139,7 +139,7 @@ def main():
         finally:
             api.window.destroy()
     try:
-        webview.start(verify_window if smoke else None)
+        webview.start(verify_window if smoke else None, gui='qt' if sys.platform.startswith('linux') else None)
     finally:
         api._stop.set()
         server.stop_lan()
