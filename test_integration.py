@@ -1,4 +1,4 @@
-import json, os, subprocess, tempfile, time, unittest, urllib.request, urllib.error
+import json, os, subprocess, sys, tempfile, time, unittest, urllib.request, urllib.error
 
 LOCAL=18865
 LAN=18866
@@ -16,7 +16,7 @@ class Integration(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.temp=tempfile.TemporaryDirectory();env=dict(os.environ,PROJECT_MANAGER_DATA=cls.temp.name,PROJECT_MANAGER_PORT=str(LOCAL),PROJECT_MANAGER_LAN_PORT=str(LAN),NO_BROWSER='1')
-        cls.proc=subprocess.Popen([os.environ.get('TEST_SERVER','python3'),*([os.path.join(os.path.dirname(__file__),'server.py')] if not os.environ.get('TEST_SERVER') else [])],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+        cls.proc=subprocess.Popen([os.environ.get('TEST_SERVER',sys.executable),*([os.path.join(os.path.dirname(__file__),'server.py')] if not os.environ.get('TEST_SERVER') else [])],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
         for _ in range(200):
             try:
                 if request(LOCAL,'state')[0]==200: break

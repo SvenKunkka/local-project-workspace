@@ -15,7 +15,8 @@ LAN_PORT = int(os.environ.get('PROJECT_MANAGER_LAN_PORT', '18766'))
 lan_server = None
 locks = {}
 locks_guard = threading.Lock()
-DATA = Path(os.environ.get('PROJECT_MANAGER_DATA', Path.home() / '.local' / 'share' / 'local-project-manager'))
+default_data = (Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData' / 'Local')) / 'LocalProjectWorkspace') if sys.platform == 'win32' else (Path(os.environ.get('XDG_DATA_HOME', Path.home() / '.local' / 'share')) / 'local-project-manager')
+DATA = Path(os.environ.get('PROJECT_MANAGER_DATA', default_data))
 DATA.mkdir(parents=True, exist_ok=True)
 DB = DATA / 'projects.sqlite3'
 
