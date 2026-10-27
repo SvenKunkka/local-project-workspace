@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
 from http.server import ThreadingHTTPServer
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
@@ -130,9 +131,13 @@ def main():
         try:
             if not api.window.events.loaded.wait(30):
                 raise RuntimeError('window did not load')
-            heading = api.window.evaluate_js("document.querySelector('#heading').textContent")
-            if heading != '总览':
-                raise RuntimeError('unexpected workspace content')
+            for _ in range(40):
+                ready = api.window.evaluate_js("document.querySelector('#heading')?.textContent === '总览' && document.querySelector('#connection')?.textContent.includes('本机主机') && typeof window.workspaceNotificationStatus === 'number'")
+                if ready:
+                    break
+                time.sleep(.5)
+            else:
+                raise RuntimeError('workspace data or desktop bridge did not initialize')
             outcome['ok'] = True
         except Exception as exc:
             LOG.error('Desktop smoke test failed: %s', exc)
