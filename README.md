@@ -1,5 +1,7 @@
 # 项目工作台
 
+**简体中文** | [English](README.en.md)
+
 一个本地优先的项目管理工作台，提供任务视图、AI 辅助排期和局域网协作。参考[原帖](https://www.xiaohongshu.com/explore/6adca1440000000024035ec5)公开展示的功能独立实现；并非原作者发布的软件，内部规则和功能细节不保证一致。
 
 [下载已发布版本](https://github.com/SvenKunkka/local-project-workspace/releases)
