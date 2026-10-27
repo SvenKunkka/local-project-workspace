@@ -132,7 +132,7 @@ def main():
             if not api.window.events.loaded.wait(30):
                 raise RuntimeError('window did not load')
             for _ in range(40):
-                ready = api.window.evaluate_js("document.querySelector('#heading')?.textContent === '总览' && document.querySelector('#connection')?.textContent.includes('本机主机') && typeof window.workspaceNotificationStatus === 'number'")
+                ready = api.window.evaluate_js("document.querySelector('#heading')?.textContent === '总览' && document.querySelector('#connection')?.textContent.includes('本机主机') && window.workspaceNotificationStatus === 2")
                 if ready:
                     break
                 time.sleep(.5)
