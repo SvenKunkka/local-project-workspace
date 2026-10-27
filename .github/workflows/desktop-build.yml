@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     env:
-      PROJECT_MANAGER_DATA: ${{ runner.temp }}/project-workspace-ci-data
+      PROJECT_MANAGER_DATA: ${{ github.workspace }}/.ci-data
       QTWEBENGINE_CHROMIUM_FLAGS: --disable-gpu
     steps:
       - uses: actions/checkout@v4
