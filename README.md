@@ -1,3 +1,12 @@
+# Project Workspace
+
+[English documentation](README.en.md) · [中文说明](#中文说明)
+
+A local-first project management workspace with task views, AI-assisted scheduling, and LAN collaboration. Independently developed from publicly presented features; it is not the original author's software. See the [English documentation](README.en.md) for installation, limitations, security and validation status.
+
+---
+
+<a id="中文说明"></a>
 # 项目工作台
 
 **简体中文** | [English](README.en.md)
